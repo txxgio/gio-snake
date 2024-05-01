@@ -22,9 +22,9 @@ function Growth (Grow: number, Snake: Sprite[]) {
             `, SpriteKind.Player)
         snake.setFlag(SpriteFlag.AutoDestroy, true)
     }
-    x = Snake[Snake.length - 1].x + 16 * speedX
-    y = Snake[Snake.length - 1].y + 15 * speedY
-    snake.setPosition(x, y)
+    x2 = Snake[Snake.length - 1].x + 16 * speedX
+    y2 = Snake[Snake.length - 1].y + 15 * speedY
+    snake.setPosition(x2, y2)
     Snake.push(snake)
     if (Snake.length == 80) {
         game.over(true)
@@ -266,20 +266,69 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     spawnFood(list)
     info.changeScoreBy(1)
 })
+function checkList (myList: any[]) {
+    for (let i = 0; i <= myList.length - 1; i++) {
+        if (myList[i] % 2 == 0) {
+            containsEven = true
+        } else {
+            containsOdd = true
+        }
+        if (containsEven && containsOdd) {
+            return true
+        }
+    }
+    return false
+}
 sprites.onDestroyed(SpriteKind.Player, function (sprite) {
     game.over(false)
 })
+let containsOdd = false
+let containsEven = false
 let list: number[] = []
 let Snakes: Sprite[] = []
+let y = 0
+let x = 0
 let isEmptyPosition = false
 let Apple: Sprite = null
 let speedY = 0
-let y = 0
+let y2 = 0
 let speedX = 0
-let x = 0
+let x2 = 0
 let growth = 0
 let snake: Sprite = null
+let isEmptyPosition2 = false
+let Apple2 = null
 Start()
+// Contains only odd numbers
+let myList1 = [
+1,
+3,
+5,
+7,
+9
+]
+// Contains only even numbers
+let myList2 = [
+2,
+4,
+6,
+8,
+10
+]
+// Contains both even and odd numbers
+let myList3 = [
+1,
+2,
+3,
+4,
+5
+]
+// Output: false
+console.log(checkList(myList1))
+// Output: false
+console.log(checkList(myList2))
+// Output: true
+console.log(checkList(myList3))
 forever(function () {
     Growth(growth, Snakes)
 })
